@@ -8,6 +8,8 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+
+
 import com.google.gson.Gson;
 
 
@@ -47,43 +49,43 @@ public class SocketCliente {
 			do {
 				System.out.println("Elige una número del menu:\n"+"1. Consultar libro por ISBN\n"+"2. Consultar libro por titulo\n"+
 									"3. Consultar libros por autor\n" + "4. Añadir libro\n" + "5. Salir de la aplicación" );
-				num=sc.nextInt();
+				num = Integer.parseInt(sc.nextLine());
 				
 				switch (num) {
 				case 1:
 					libro = new Libro();
 					System.out.println("Introduzca el ISBN");
-					texto = sc.next();
+					texto = sc.nextLine();
 					libro.setIsbn(texto);
 					json = gson.toJson(libro);
 					break;					
-				case 2:
+				case 2:					
 					libro = new Libro();
 					System.out.println("Introduzca el título");
-					texto = sc.next();
+					texto = sc.nextLine();
 					libro.setTitulo(texto);
 					json = gson.toJson(libro);
 					break;
 				case 3:
 					libro = new Libro();
 					System.out.println("Introduzca el autor");
-					texto = sc.next();
+					texto = sc.nextLine();
 					libro.setAutor(texto);
 					json = gson.toJson(libro);
 					break;
-				case 4:
+				case 4:					
 					libro=new Libro();
 					System.out.println("Introduzca un ISBN");
-					texto = sc.next();
+					texto = sc.nextLine();
 					libro.setIsbn(texto);
 					System.out.println("Introduzca el título");
-					texto = sc.next();
+					texto = sc.nextLine();
 					libro.setTitulo(texto);
 					System.out.println("Introduzca el autor");
-					texto = sc.next();
+					texto = sc.nextLine();
 					libro.setAutor(texto);
 					System.out.println("Introduzca el precio");
-					int precio = sc.nextInt();
+					int precio = Integer.parseInt(sc.nextLine());
 					libro.setPrecio(precio);
 					json = gson.toJson(libro);									
 					break;					
@@ -95,19 +97,20 @@ public class SocketCliente {
 				default:
 					System.out.println("Introduzca un numero del menu");;
 				}
-				
-				
-					
+					// Enviamos lo que quiera el cliente solicitar	
 					salida.println(json);
+				
 					System.out.println("CLIENTE: Esperando respuesta.....");
+					// recibimos respuesta del servidor
 					String respuesta = entradaBuffer.readLine();
-					System.out.println(respuesta);									
+					// damos formato a la respuesta del servidor, cambiando
+					// las @@ por un salto de linea, asi podremos ver cada libro
+					// en una linea
+					String remplazo = respuesta.replaceAll("@@", "\n");
+					
+					System.out.println("El Servidor responde: \n" + remplazo + "\n");									
 				
-				
-				
-				
-				
-				
+		
 			} while (continuar);
 			
 			socketAlServidor.close();
@@ -123,6 +126,8 @@ public class SocketCliente {
 			System.err.println("CLIENTE: Error -> " + e);
 			e.printStackTrace();
 		}
+		
+		
 		System.out.println("CLIENTE: Fin del programa");
 	}
 	

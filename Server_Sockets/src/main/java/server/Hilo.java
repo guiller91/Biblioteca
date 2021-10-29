@@ -15,18 +15,12 @@ public class Hilo implements Runnable {
 	private Socket socketAlCliente;
 	public Biblioteca biblio = new Biblioteca();
 	
-	
-	
-	
-	
+
 	public Hilo(Socket socketAlCliente ) {
 		numCliente++;
 		hilo = new Thread(this, "cliente_"+numCliente);
 		this.socketAlCliente = socketAlCliente;
-		hilo.start();
-		
-		
-		
+		hilo.start();	
 	}
 	
 	@Override
@@ -49,20 +43,23 @@ public class Hilo implements Runnable {
 			
 			while(continuar) {
 				texto = entradaBuffer.readLine();
-				System.out.println(texto);
+				
 				if(texto.equalsIgnoreCase("FIN")) {
-					salida.println("OK");
+					salida.println("Cerrando conexión");
 					System.out.println(hilo.getName() + " ha cerrado la comunicacion");
 					continuar = false;					
 				}else {
 					
 					Libro libro = gson.fromJson(texto, Libro.class);
-					System.out.println(libro.toString());
+					System.out.println("El" + hilo.getName()+ " " + biblio.evaluarPeticionServidor(libro));
 					String respuesta = biblio.evaluarPeticion(libro);
-					System.out.println("SERVIDOR: le ha respondido al cliente : "+ respuesta);
 					salida.println(respuesta);
+					System.out.println("SERVIDOR: le ha respondido al cliente : \n" + respuesta.replaceAll("@@", "\n"));
+					
+					
 				}
 			}
+			
 			socketAlCliente.close();
 			
 		} catch (IOException e) {
