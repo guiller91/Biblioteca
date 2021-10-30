@@ -13,7 +13,7 @@ public class Server {
 		System.out.println("|-----------------|");
 		System.out.println("|     SERVIDOR    |");
 		System.out.println("|-----------------|");
-		
+		Biblioteca biblio = new Biblioteca();
 		
 		
 		int peticion = 0;
@@ -28,7 +28,7 @@ public class Server {
 			while(true) {
 				Socket socketAlCliente = servidor.accept();
 				System.out.println("SERVIDOR: peticion numero " + ++peticion + " recibida");
-				new Hilo(socketAlCliente);
+				new Hilo(socketAlCliente,biblio);
 				
 			}
 			

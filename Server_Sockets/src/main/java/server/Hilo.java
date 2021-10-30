@@ -13,13 +13,14 @@ public class Hilo implements Runnable {
 	private Thread hilo;
 	private static int numCliente = 0;
 	private Socket socketAlCliente;
-	public Biblioteca biblio = new Biblioteca();
+	public Biblioteca biblio;
 	
 
-	public Hilo(Socket socketAlCliente ) {
+	public Hilo(Socket socketAlCliente, Biblioteca biblio ) {
 		numCliente++;
 		hilo = new Thread(this, "cliente_"+numCliente);
 		this.socketAlCliente = socketAlCliente;
+		this.biblio=biblio;
 		hilo.start();	
 	}
 	
