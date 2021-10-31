@@ -6,10 +6,10 @@ public class Libro {
 	private String isbn;
 	private String titulo;
 	private String autor;
-	private double precio;
-	
+	private int precio;
+
 	// ----- Builders -----
-	public Libro(String isbn, String titulo, String autor, double precio) {
+	public Libro(String isbn, String titulo, String autor, int precio) {
 		super();
 		this.isbn = isbn;
 		this.titulo = titulo;
@@ -20,7 +20,7 @@ public class Libro {
 	public Libro() {
 		super();
 	}
-	
+
 	// ----- Getters and Setters -----
 	public String getIsbn() {
 		return isbn;
@@ -50,12 +50,12 @@ public class Libro {
 		return precio;
 	}
 
-	public void setPrecio(double precio) {
+	public void setPrecio(int precio) {
 		this.precio = precio;
 	}
 
 	@Override
-	
+
 	public String toString() {
 		return titulo + " [isbn=" + isbn + ", autor=" + autor + ", precio=" + precio + "€]";
 	}
